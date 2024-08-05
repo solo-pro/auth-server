@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login with OAuth 2.0</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .btn {
+            margin: 0.5rem;
+        }
+        .login-btn img {
+            width: 366px;
+            height: 90px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2 class="mb-4">Login with OAuth 2.0</h2>
+    <a th:href="@{/oauth2/authorization/kakao}" class="btn btn-block login-btn">
+        <img src="/images/kakao_login_large_narrow.png" alt="kakao login">
+    </a>
+    <a th:href="@{/oauth2/authorization/google}" class="btn btn-block login-btn">
+        <img src="/images/web_light_sq_ctn.svg" alt="Google login" class="light-mode">
+        <img src="/images/web_dark_sq_ctn.svg" alt="Google login" class="dark-mode">
+    </a>
+</div>
+<script>
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const lightModeImages = document.querySelectorAll('.light-mode');
+    const darkModeImages = document.querySelectorAll('.dark-mode');
+
+    function updateImages() {
+        if (prefersDarkScheme.matches) {
+            lightModeImages.forEach(img => img.style.display = 'none');
+            darkModeImages.forEach(img => img.style.display = 'block');
+        } else {
+            lightModeImages.forEach(img => img.style.display = 'block');
+            darkModeImages.forEach(img => img.style.display = 'none');
+        }
+    }
+
+    prefersDarkScheme.addEventListener('change', updateImages);
+    updateImages();
+</script>
+</body>
+</html>
