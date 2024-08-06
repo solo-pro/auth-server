@@ -36,13 +36,11 @@ out/
 ### VS Code ###
 .vscode/
 
-/src/main/**/*.yaml
-/src/main/**/*.yml
-/src/main/**/*.json
-/src/main/**/*.xml
-/src/main/**/*.properties
+*.yaml
+*.yml
+*.json
+*.xml
+*.properties
 
 *.log
 *.log.*
-
-*.properties
