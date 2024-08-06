@@ -36,7 +36,7 @@ jobs:
       run: chmod 744 gradlew
       
     - name: build
-      run: ./gradlew clean build
+      run: ./gradlew clean build -i
       
     - name: Build the Docker image
       run: docker build . --tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${{ secrets.DOCKER_TAG }}
