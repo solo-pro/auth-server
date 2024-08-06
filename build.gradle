@@ -70,6 +70,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
+    testRuntimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     // rpc
     implementation "net.devh:grpc-server-spring-boot-starter:${projectVersion}"
