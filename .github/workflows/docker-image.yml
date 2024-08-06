@@ -21,7 +21,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Set properties
-      run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yaml
+      run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
       
     - name: Set gradle properties
       run: echo "${{ secrets.GRADLE_PROPERTIES }}" > ./gradle.properties
