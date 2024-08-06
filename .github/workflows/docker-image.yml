@@ -24,7 +24,8 @@ jobs:
       
     - name: Set gradle properties
       run: echo "${{ secrets.GRADLE_PROPERTIES }}" > ./gradle.properties
-      
+    - name: init Test resource
+      run: mkdir /src/test/resources
     - name: Set Test properties
       run: echo "${{ secrets.TEST_APPLICATION }}" > ./src/test/resources/application.yaml
       
