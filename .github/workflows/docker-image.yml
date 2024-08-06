@@ -21,6 +21,8 @@ jobs:
         distribution: 'temurin'
     - name: Set properties
       run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yaml
+    - name: Set gradle properties
+      run: echo "${{ secrets.GRADLE_PROPERTIES }}" > ./gradle.yaml
       
     - name: gradlew setting
       run: chmod 744 gradlew
