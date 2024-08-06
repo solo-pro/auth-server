@@ -30,13 +30,13 @@ jobs:
       run: mkdir ./src/test/resources
       
     - name: Set Test properties
-      run: echo "${{ secrets.TEST_APPLICATION }}" > ./src/test/resources/application.yaml
+      run: echo "${{ secrets.TEST_APPLICATION }}" > ./src/test/resources/application.properties
       
     - name: gradlew setting
       run: chmod 744 gradlew
       
     - name: build
-      run: ./gradlew clean build -i
+      run: ./gradlew clean build 
       
     - name: Build the Docker image
       run: docker build . --tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${{ secrets.DOCKER_TAG }}
