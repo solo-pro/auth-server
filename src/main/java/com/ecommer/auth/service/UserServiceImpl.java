@@ -1,5 +1,6 @@
 package com.ecommer.auth.service;
 
+
 import com.ecommer.auth.dto.response.TokenResponse;
 import com.ecommer.auth.entity.User;
 import com.ecommer.auth.repository.UserRepository;
@@ -7,20 +8,17 @@ import com.ecommer.auth.util.JwtUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.io.IOException;
+
 
 @Slf4j
 @Service
@@ -29,6 +27,7 @@ public class UserServiceImpl implements UserService, AuthService {
 
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
+
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {

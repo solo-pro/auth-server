@@ -3,16 +3,16 @@ package com.ecommer.auth.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Map;
 
 
 @Component
@@ -31,7 +31,6 @@ public class JwtUtils {
 
         return JWT.create()
                 .withSubject(user.getUsername())
-                .withClaim("authorities", user.getAuthorities().toString())
                 .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpiration))
                 .sign(accessTokenSecret);
     }
@@ -41,10 +40,12 @@ public class JwtUtils {
                 .withExpiresAt(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .sign(refreshTokenSecret);
     }
-    public DecodedJWT parseToken(String token) {
+    public String parseToken(String token) {
         return JWT.require(accessTokenSecret)
                 .build()
-                .verify(token);
+                .verify(token)
+                .getSubject();
+
     }
 
     public boolean validateToken(String authToken) {
