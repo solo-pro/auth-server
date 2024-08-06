@@ -19,13 +19,16 @@ jobs:
       with:
         java-version: 17
         distribution: 'temurin'
+        
     - name: Set properties
       run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yaml
       
     - name: Set gradle properties
       run: echo "${{ secrets.GRADLE_PROPERTIES }}" > ./gradle.properties
+      
     - name: init Test resource
       run: mkdir ./src/test/resources
+      
     - name: Set Test properties
       run: echo "${{ secrets.TEST_APPLICATION }}" > ./src/test/resources/application.yaml
       
@@ -33,7 +36,7 @@ jobs:
       run: chmod 744 gradlew
       
     - name: build
-      run: ./gradlew build
+      run: ./gradlew clean build
       
     - name: Build the Docker image
       run: docker build . --tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${{ secrets.DOCKER_TAG }}
