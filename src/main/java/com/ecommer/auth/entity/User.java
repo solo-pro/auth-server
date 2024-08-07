@@ -17,7 +17,11 @@ import java.util.Map;
 import java.util.Objects;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS",
+        indexes = {
+        @Index(name = "USER_EMAIL_IDX",columnList = "EMAIL", unique = true),
+        @Index(name = "USER_USERNAME_IDX",columnList = "USERNAME", unique = true)
+})
 @Builder
 @Getter
 @NoArgsConstructor
@@ -32,27 +36,26 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String username;
     @Column(name = "NICKNAME")
     private String nickname;
-    @Column(name = "PASSWORD")
-    private String password;
     @Column(name = "PROVIDER", nullable = false)
     private String provider;
     @Builder.Default
     @Column(name = "ROLE", nullable = false)
     private String role = "ROLE_USER";
-    @Column(name = "REFRESH_TOKEN")
-    private String refreshToken;
-    @Column(name = "ACCESS_TOKEN")
-    private String accessToken;
-    @Column(name = "PROFILE_IMAGE_URL")
+    @Column(name = "PROFILE_IMAGE_URL", length = 1000)
     private String profileImageUrl;
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = "PHONE_NUMBER", nullable = false, length = 20)
     private String phoneNumber;
-    @Column(name = "ADDRESS")
+    @Column(name = "ADDRESS", nullable = false, length = 1000)
     private String address;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(()-> role);
+    }
+
+    @Override
+    public String getPassword() {
+        return "";
     }
 
     @Override
@@ -95,10 +98,6 @@ public class User extends BaseTimeEntity implements UserDetails {
                 .profileImageUrl(properties.get("profile_image"))
                 .provider("kakao")
                 .build();
-    }
-    public void setToken(TokenResponse tokenResponse){
-        this.accessToken = tokenResponse.accessToken();
-        this.refreshToken = tokenResponse.refreshToken();
     }
     public void firstLogin(String phoneNumber, String address){
         this.phoneNumber = phoneNumber;
