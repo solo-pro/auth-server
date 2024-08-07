@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 
@@ -40,7 +39,7 @@ public class AuthController {
             @RequestParam String phoneNumber,
             @RequestParam String address) {
         // 사용자 정보 업데이트
-        User user = userService.update(oauth2User, phoneNumber, address);
+        userService.update(oauth2User, phoneNumber, address);
         return "redirect:success";  // 홈 페이지로 리디렉션
     }
     @GetMapping("/success")

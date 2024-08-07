@@ -2,7 +2,6 @@ package com.ecommer.auth.service;
 
 import com.ecommer.auth.dto.response.TokenResponse;
 import com.ecommer.auth.entity.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public interface UserService  {

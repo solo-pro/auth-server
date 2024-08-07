@@ -36,8 +36,9 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String password;
     @Column(name = "PROVIDER", nullable = false)
     private String provider;
+    @Builder.Default
     @Column(name = "ROLE", nullable = false)
-    private String role;
+    private String role = "ROLE_USER";
     @Column(name = "REFRESH_TOKEN")
     private String refreshToken;
     @Column(name = "ACCESS_TOKEN")
@@ -51,7 +52,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(()-> "ROLE_USER");
+        return List.of(()-> role);
     }
 
     @Override
@@ -82,7 +83,6 @@ public class User extends BaseTimeEntity implements UserDetails {
                     .username(oAuth2User.getName())
                     .profileImageUrl(oAuth2User.getAttribute("picture"))
                     .provider("google")
-                    .role("ROLE_USER")
                     .build();
         }
 
@@ -94,7 +94,6 @@ public class User extends BaseTimeEntity implements UserDetails {
                 .username(oAuth2User.getName())
                 .profileImageUrl(properties.get("profile_image"))
                 .provider("kakao")
-                .role("ROLE_USER")
                 .build();
     }
     public void setToken(TokenResponse tokenResponse){

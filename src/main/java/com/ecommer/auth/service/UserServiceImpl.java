@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService, AuthService {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User principal = (OAuth2User) authentication.getPrincipal();
         log.info("{} is login {}", principal.getName(), principal.getAttributes());
-        User user = saveFromOAuthUser(principal);
+        saveFromOAuthUser(principal);
         response.sendRedirect("/additional-info");
     }
 
@@ -67,8 +67,7 @@ public class UserServiceImpl implements UserService, AuthService {
         }
         log.info("saveFromOAuthUser : {}",oAuth2User);
         user = User.from(oAuth2User);
-        User save = userRepository.save(user);
-        return save;
+        return userRepository.save(user);
 
     }
 

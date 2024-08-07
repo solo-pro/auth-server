@@ -1,7 +1,6 @@
 package com.ecommer.auth.config;
 
 import com.ecommer.auth.service.AuthService;
-import com.ecommer.auth.service.UserServiceImpl;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -11,13 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
@@ -39,14 +36,15 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http)
             throws Exception {
+        String loginEndPoint = "/login";
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/login","/actuator/**","/images/**", "/css/**")
+                .requestMatchers(loginEndPoint,"/actuator/**","/images/**", "/css/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated());
         http.formLogin(AbstractHttpConfigurer::disable);
         http.oauth2Login(httpSecurityOAuth2LoginConfigurer ->
-                httpSecurityOAuth2LoginConfigurer.loginPage("/login")
+                httpSecurityOAuth2LoginConfigurer.loginPage(loginEndPoint)
                         .successHandler(authService)
                         .failureHandler(authService)
         );
@@ -54,7 +52,7 @@ public class SecurityConfig {
         http
                 .exceptionHandling((exceptions) -> exceptions
                         .defaultAuthenticationEntryPointFor(
-                                new LoginUrlAuthenticationEntryPoint("/login"),
+                                new LoginUrlAuthenticationEntryPoint(loginEndPoint),
                                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                         )
                 );
